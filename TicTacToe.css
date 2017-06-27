@@ -1,0 +1,33 @@
+
+table{
+  border: 2px solid black;
+  padding: 12px;
+  margin: 20vw auto;
+}
+
+td{
+  border: 1px solid grey;
+  padding: 5px;
+  margin: 0;
+  width: 3em;
+  height: 3em;
+  text-align: center;
+}
+
+h1,h2,h3{
+  font-size: 2rem;
+  text-align: center;
+}
+
+p{
+  text-align: center;
+}
+
+.hidden{
+  display: none;
+}
+
+.winner{
+  font-size: 3rem;
+  color: #ef0707;
+}
