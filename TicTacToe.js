@@ -1,14 +1,19 @@
 const ticTacApp = () => {
 
   let board = [[' ', ' ', ' '],
-              [' ', ' ', ' '],
-              [' ', ' ', ' ']];
+               [' ', ' ', ' '],
+               [' ', ' ', ' ']];
 
 
   let turn = 'X';
 
+  let scoreBoard = {
+    x_wins: 0,
+    o_wins: 0
+  };
 
-  function renderBoard() {
+
+  const renderBoard = () => {
     const gameBoard = document.getElementById('GameBoard');
     gameBoard.innerHTML='';
     for (var i=0; i<board.length; i++) {
@@ -20,7 +25,7 @@ const ticTacApp = () => {
   };
 
 
-  function getRow(boardRow, rowNumber) {
+  const getRow = (boardRow, rowNumber) => {
     const row = '<tr data-row = "'+rowNumber+'">'
     + '<td class ="boardSpace" data-col="0">' + boardRow[0] + '</td>'
     + '<td class ="boardSpace" data-col="1">' + boardRow[1] + '</td>'
@@ -31,50 +36,46 @@ const ticTacApp = () => {
   };
 
 
-  function restartGame(){
+  const restartGame = () => {
     board = [[' ', ' ', ' '],
             [' ', ' ', ' '],
             [' ', ' ', ' ']];
 
     renderBoard();
-    console.log("New Game Started!");
+    removeWinnerMessage();
   };
 
 
-  function checkForWin(){
-    const boardArray = board;
+  const checkForWin = () => {
 
-    if (boardArray[0][0]===boardArray[1][1] && boardArray[0][0]===boardArray[2][2]){
-      if(boardArray[0][0]!==' '){
-        winnerMessage(boardArray[0][0]);
-        console.log("Game over. "+boardArray[0][0]+" Wins!!");
+    if (board[0][0]===board[1][1] && board[0][0]===board[2][2]){
+      if(board[0][0]!==' '){
+        winnerMessage(board[0][0]);
+        updateScoreboard(board[0][0]);
         return;
       }
-    } else if (boardArray[2][0]===boardArray[1][1] && boardArray[2][0]===boardArray[0][2]){
-      if (boardArray[2][0]!==' '){
-        winnerMessage(boardArray[2][0]);
-        console.log("Game over. "+boardArray[2][0]+" Wins!!");
+    } else if (board[2][0]===board[1][1] && board[2][0]===board[0][2]){
+      if (board[2][0]!==' '){
+        winnerMessage(board[2][0]);
+        updateScoreboard(board[2][0]);
         return;
       }
     }
 
 
     for (var i=0; i<3; i++){
-      let row = boardArray[i];
-      if (row[0]===row[1] && row[0]===row[2]){
-        if (row[0]!==' '){
-          winnerMessage(row[0]);
-          console.log("Game over. "+row[0]+" Wins!!");
+      if (board[i][0]===board[i][1] && board[i][0]===board[i][2]){
+        if (board[i][0]!==' '){
+          winnerMessage(board[i][0]);
+          updateScoreboard(board[i][0]);
           return;
         }
-      }else if (boardArray[0][i]===boardArray[1][i] && boardArray[0][i]===boardArray[2][i]){
-        if (boardArray[0][i]!==' '){
-          winnerMessage(boardArray[0][i]);
-          console.log("Game over. "+boardArray[0][i]+" Wins!!");
+      }else if (board[0][i]===board[1][i] && board[0][i]===board[2][i]){
+        if (board[0][i]!==' '){
+          winnerMessage(board[0][i]);
+          updateScoreboard(board[0][i]);
           return;
         }
-      }else {
-        console.log("No winner yet");
       }
     }
   };
@@ -82,36 +83,42 @@ const ticTacApp = () => {
 
   const winnerMessage = (winner) => {
     if(winner==='X'){
-      const xMessage = document.getElementById("xWins");
+      const xMessage = document.getElementById("X_Wins");
       xMessage.classList.remove("hidden");
     }else if(winner==='O'){
-      const oMessage = document.getElementById("oWins");
+      const oMessage = document.getElementById("O_Wins");
       oMessage.classList.remove("hidden");
     }
-  }
+  };
 
-
-  function markSpace(rowNumber, columnNumber){
-    let boardSpace = board[rowNumber][columnNumber];
-
-    if(isSpaceAvailable(boardSpace)){
-      board[rowNumber][columnNumber] = turn;
-      renderBoard();
-      swapTurns();
-    }else{
-      console.log("space is taken");
+  const updateScoreboard = (winner) => {
+    if(winner==='X'){
+      scoreBoard.x_wins++;
+    }else if(winner==='O'){
+      scoreBoard.o_wins++;
     }
-
   };
 
 
-  function isSpaceAvailable(spaceValue) {
+  const markSpace = (rowNumber, columnNumber) => {
+    let boardSpace = board[rowNumber][columnNumber];
+
+    if(spaceAvailable(boardSpace)){
+      board[rowNumber][columnNumber] = turn;
+      renderBoard();
+      swapTurns();
+    }
+  };
+
+
+  const spaceAvailable = (spaceValue) => {
     if(spaceValue!==' '){
       return false;
     } else return true;
   };
 
-  function boardSpaceClickHandler() {
+
+  const boardSpaceClickHandler = () => {
     const boardSpaces = document.getElementsByClassName('boardSpace');
     Array.from(boardSpaces).forEach((space) => {
       space.addEventListener('click', (e) => {
@@ -121,18 +128,40 @@ const ticTacApp = () => {
         markSpace(rowNumber, columnNumber);
       });
     });
-  }
+  };
 
-  function swapTurns(){
+  const swapTurns = () => {
     if (turn==='X'){
       turn = 'O';
-    }else {
+    }else{
       turn = 'X';
     }
-  }
+  };
+
+  const restartButtonClickHandler = () => {
+    button = document.getElementById("RestartGame");
+    button.addEventListener("click", restartGame);
+  };
+
+  const removeWinnerMessage = () => {
+    const xMessage = document.getElementById("xWins");
+    const oMessage = document.getElementById("oWins");
+
+    xMessage.classList.add("hidden");
+    oMessage.classList.add("hidden");
+  };
+
+  const getWins = (player) => {
+    if(player==='X'){
+      return scoreBoard.x_wins;
+    }else if(player==='O'){
+      return scoreBoard.o_wins;
+    }
+  };
 
 
   renderBoard();
+  restartButtonClickHandler();
 
 
 

@@ -10,12 +10,32 @@
 </head>
 
 <body>
-  <h1>Tic-Tac-TOE</h1>
-  <p> By Tyler </p>
-  <p class ="hidden winner" id="xWins">Game Over. X wins!!!</p>
-  <p class ="hidden winner" id="oWins">Game Over. O wins!!!</p>
-  <table id="GameBoard">
+  <header>
+    <h1>Tic-Tac-TOE</h1>
+    <p> By Tyler </p>
+  </header>
+  <div class="winnerMessage">
+    <p class ="hidden winner" id="X_Wins">Game Over. X wins!!!</p>
+    <p class ="hidden winner" id="O_Wins">Game Over. O wins!!!</p>
+  </div>
+
+  <table id="scoreBoard">
+    <tr>Wins</tr>
+    <tr>
+      <td>X</td>
+      <td>O</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>  </td>
+    </tr>
+
   </table>
+
+  <div class ="game">
+    <table id="GameBoard"></table>
+    <input id="RestartGame" class="button" type="button" value="Restart Game"/>
+  </div>
 
   <script> ticTacApp() </script>
 </body>
