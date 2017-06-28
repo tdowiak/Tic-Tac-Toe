@@ -7,11 +7,6 @@ const ticTacApp = () => {
 
   let turn = 'X';
 
-  let scoreBoard = {
-    x_wins: 0,
-    o_wins: 0
-  };
-
 
   const renderBoard = () => {
     const gameBoard = document.getElementById('GameBoard');
@@ -51,13 +46,13 @@ const ticTacApp = () => {
     if (board[0][0]===board[1][1] && board[0][0]===board[2][2]){
       if(board[0][0]!==' '){
         winnerMessage(board[0][0]);
-        updateScoreboard(board[0][0]);
+        updateScoreboardData(board[0][0]);
         return;
       }
     } else if (board[2][0]===board[1][1] && board[2][0]===board[0][2]){
       if (board[2][0]!==' '){
         winnerMessage(board[2][0]);
-        updateScoreboard(board[2][0]);
+        updateScoreboardData(board[2][0]);
         return;
       }
     }
@@ -67,13 +62,13 @@ const ticTacApp = () => {
       if (board[i][0]===board[i][1] && board[i][0]===board[i][2]){
         if (board[i][0]!==' '){
           winnerMessage(board[i][0]);
-          updateScoreboard(board[i][0]);
+          updateScoreboardData(board[i][0]);
           return;
         }
       }else if (board[0][i]===board[1][i] && board[0][i]===board[2][i]){
         if (board[0][i]!==' '){
           winnerMessage(board[0][i]);
-          updateScoreboard(board[0][i]);
+          updateScoreboardData(board[0][i]);
           return;
         }
       }
@@ -91,13 +86,6 @@ const ticTacApp = () => {
     }
   };
 
-  const updateScoreboard = (winner) => {
-    if(winner==='X'){
-      scoreBoard.x_wins++;
-    }else if(winner==='O'){
-      scoreBoard.o_wins++;
-    }
-  };
 
 
   const markSpace = (rowNumber, columnNumber) => {
@@ -138,18 +126,38 @@ const ticTacApp = () => {
     }
   };
 
+
   const restartButtonClickHandler = () => {
     button = document.getElementById("RestartGame");
     button.addEventListener("click", restartGame);
   };
 
+
   const removeWinnerMessage = () => {
-    const xMessage = document.getElementById("xWins");
-    const oMessage = document.getElementById("oWins");
+    const xMessage = document.getElementById("X_Wins");
+    const oMessage = document.getElementById("O_Wins");
 
     xMessage.classList.add("hidden");
     oMessage.classList.add("hidden");
   };
+
+//scoreboard handled below here
+
+  let scoreBoard = {
+    x_wins: 0,
+    o_wins: 0
+  };
+
+
+  const updateScoreboardData = (winner) => {
+    if(winner==='X'){
+      scoreBoard.x_wins++;
+    }else if(winner==='O'){
+      scoreBoard.o_wins++;
+    }
+    renderScores();
+  };
+
 
   const getWins = (player) => {
     if(player==='X'){
@@ -157,6 +165,20 @@ const ticTacApp = () => {
     }else if(player==='O'){
       return scoreBoard.o_wins;
     }
+  };
+
+  const renderScores = () => {
+    let scores = document.getElementById("WinCount");
+    scores.innerHTML = getScoreRow();
+  };
+
+  const getScoreRow = () => {
+    let scoreRow = '<tr id="WinCount">'
+      +'<td>'+getWins('X')+'</td>'
+      +'<td>'+getWins('O')+'</td>'
+      +'</tr>';
+
+    return scoreRow;
   };
 
 

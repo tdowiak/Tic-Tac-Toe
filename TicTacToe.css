@@ -3,7 +3,7 @@ html{
   z-index: -1;
 }
 
-table{
+#GameBoard{
   border: 2px solid black;
   padding: 12px;
   margin: auto;
