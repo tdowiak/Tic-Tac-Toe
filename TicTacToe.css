@@ -3,20 +3,17 @@ html{
   z-index: -1;
 }
 
-#GameBoard{
-  border: 2px solid black;
-  padding: 12px;
-  margin: auto;
-  background-color: rgba(155, 164, 178, 0.96);
+h1,h2,h3{
+  font-size: 2rem;
+  text-align: center;
+}
+
+p{
+  text-align: center;
 }
 
 header{
   background-color: rgba(155, 164, 178, 0.96);
-}
-
-.winnerMessage{
-  margin: 0;
-  height: 80px;
 }
 
 td{
@@ -28,13 +25,32 @@ td{
   text-align: center;
 }
 
-h1,h2,h3{
-  font-size: 2rem;
-  text-align: center;
+.game {
+  margin: auto;
+  width: 220px;
+  height: 220px;
+  padding: 50px;
+  display: inline-block;
 }
 
-p{
-  text-align: center;
+#GameBoard{
+  border: 2px solid black;
+  padding: 12px;
+  margin: auto;
+  background-color: rgba(155, 164, 178, 0.96);
+}
+
+#ScoreBoard{
+  display: inline-block;
+  padding: 50px;
+  margin-left: 20vw;
+}
+
+
+.winnerMessage{
+  margin: 12px 0;
+  display: block;
+  height: 55px;
 }
 
 .hidden{
@@ -44,13 +60,10 @@ p{
 .winner{
   font-size: 3rem;
   color: #ef0707;
+  margin: 12px 0;
 }
 
-.game {
-  margin: auto;
-  width: 220px;
-  height: 220px;
-}
+
 
 .button {
   margin: 12px 48px;
